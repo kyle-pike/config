@@ -46,7 +46,7 @@ function dnf-setup(){
 # updates system and install neccessary software 
 function update(){
 
-    dnf upgrade && dnf install epel-release -y\
+    dnf upgrade -y && dnf install epel-release -y\
     && dnf install dnf install ranger ncdu\
     vim dnf-automatic policycoreutils-python-utils bash-completion -y
 
