@@ -28,7 +28,8 @@ fi
 function dnf-setup(){
 
     {
-    # custom edits
+    echo " "
+    echo "# custom edits"
     echo "max_parallel_downloads=20"
     echo "fastestmirror=True"
     } >> /etc/dnf/dnf.conf
