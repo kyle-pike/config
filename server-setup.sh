@@ -6,7 +6,6 @@
 # goals
 # move to ansible 
 # put updates on log and to standard output 
-#
 
 
 # variables #
@@ -29,7 +28,7 @@ function dnf-setup(){
 
     {
     echo " "
-    echo "# custom edits"
+    echo "# custom edits #"
     echo "max_parallel_downloads=20"
     echo "fastestmirror=True"
     } >> /etc/dnf/dnf.conf
@@ -37,11 +36,12 @@ function dnf-setup(){
 }
 
 # updates system and install neccessary software 
-function update(){
+function pkgs(){
 
     dnf upgrade -y && dnf install epel-release -y\
     && dnf install ranger ncdu\
-    vim dnf-automatic policycoreutils-python-utils bash-completion -y
+    vim dnf-automatic policycoreutils-python-utils bash-completion\
+    setroubleshoot-server setools-console -y
 
 }
 
@@ -51,11 +51,9 @@ function update(){
 if check-root
 
 then 
-    dnf-setup && update 
+    dnf-setup && pkgs
 
 else 
     echo "script failed"
 
 fi
-
-# test
