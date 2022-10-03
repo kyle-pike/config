@@ -39,7 +39,7 @@ function dnf-setup(){
 function pkgs(){
 
     dnf upgrade -y && dnf install epel-release -y\
-    && dnf install ranger ncdu podman podman-compose\
+    && dnf install ranger ncdu podman\
     vim dnf-automatic policycoreutils-python-utils bash-completion\
     setroubleshoot-server setools-console -y
 
