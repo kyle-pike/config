@@ -56,4 +56,6 @@ then
 else 
     echo "script failed"
 
-fi 
+fi
+
+# test
