@@ -51,11 +51,11 @@ function update(){
 			dnf upgrade -y && dnf autoremove -y 
 		then
 		#	cat <<"EOF"
-					============================================
+					================================
 					
-								REBOOTING SERVER
+							REBOOTING SERVER
 
-					============================================
+					================================
 			EOF 	
 			sleep 5 
 			systemctl reboot
