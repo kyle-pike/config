@@ -50,7 +50,13 @@ function update(){
 		if
 			dnf upgrade -y && dnf autoremove -y 
 		then
-			echo "REBOOTING SERVER"
+		#	cat <<"EOF"
+					============================================
+					
+								REBOOTING SERVER
+
+					============================================
+			EOF 	
 			sleep 5 
 			systemctl reboot
 		else
