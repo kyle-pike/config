@@ -50,7 +50,7 @@ function update(){
 		if
 			dnf upgrade -y && dnf autoremove -y 
 		then
-			echo "system up-to-date requires reboot" >> $log; systemctl reboot
+			echo "REBOOTING SERVER" ; systemctl reboot
 		else
 			echo "server failed to update" >> $log
 		fi
