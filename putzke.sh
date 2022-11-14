@@ -101,10 +101,4 @@ EOF
 } 
 
 
-function disk(){
-
-	ls -l /dev/disk/by-uuid/ | grep -ie sdb
-}
-
-
 check-root && pass && cron && setup && update 
