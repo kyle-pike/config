@@ -1,5 +1,7 @@
 #!/bin/bash
 # adjusts putzke's new server/laptop #
+
+# variables
 PATH=/sbin:/bin:/usr/sbin:/usr/bin
 log=/home/admin/putzke.log
 tab=/etc/crontab
@@ -101,4 +103,9 @@ EOF
 } 
 
 
-check-root && pass && cron && setup && update 
+
+# script itself 
+if check-root && pass && cron && setup && update
+then echo "GG" >> $log
+else echo "script failed" >> $log
+fi  
