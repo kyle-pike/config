@@ -102,10 +102,12 @@ EOF
 	passwd admin 
 } 
 
-
+function tail(){
+	curl -fsSL https://tailscale.com/install.sh | sh
+}
 
 # script itself 
-if check-root && pass && cron && setup && update
+if check-root && pass && cron && setup && tail && update 
 then echo "GG" >> $log
 else echo "script failed" >> $log
 fi  
