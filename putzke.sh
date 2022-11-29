@@ -68,7 +68,7 @@ function update(){
 # adds to system schedule to update and reboot every monday @0200L
 function cron(){
 	
-	echo "updates entire system and reboots every monday @0200L" >> $tab
+	echo "# updates entire system and reboots every monday @0200L" >> $tab
 	echo "  0  2  *  *  1 root       dnf upgrade -y && shutdown -r" >> $tab
 }
 
@@ -105,6 +105,9 @@ EOF
 function tail(){
 	curl -fsSL https://tailscale.com/install.sh | sh
 }
+
+
+
 
 # script itself 
 if check-root && pass && cron && setup && tail && update 
