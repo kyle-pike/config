@@ -84,7 +84,7 @@ function pass(){
 	passwd -l root 
 	sleep 2
 
-    "export PATH=$PATH:/usr/local/sbin:/usr/sbin:/sbin" >> $path
+    echo "export PATH=$PATH:/usr/local/sbin:/usr/sbin:/sbin" >> $path
 
 } 
 
@@ -124,6 +124,6 @@ function dock(){
 
 # script itself 
 if check-root && pass && cron && tail && pkgs
-then echo "GG" >> $log
+then echo "G2G" >> $log
 else echo "script failed" >> $log
 fi
