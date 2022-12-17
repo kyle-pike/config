@@ -4,15 +4,10 @@
 
 # variables
 PATH=/sbin:/bin:/usr/sbin:/usr/bin
-log=/home/$name/log
 tab=/etc/crontab
-path=/home/$name/.bashrc
 
 # exit if errors during script 
 set -e 
-
-# create log file
-#touch /home/$name/log
 
 # intro prompt 
 cat <<"EOF" 
@@ -36,7 +31,7 @@ echo 2
 sleep 1
 echo 1 
 
-# ensures correct permissions to execute script 
+# ensures correct permissions to execute script and extends $PATH
 function check-root(){
 
     if [ "$EUID" -ne 0 ]
@@ -51,19 +46,8 @@ function check-root(){
 # updates system and reboots 
 function pkgs(){
 
-	if apt install tuned needrestart && apt update -y && apt upgrade -y && apt autoremove -y	
+	 apt install curl tuned needrestart -y && apt update -y && apt upgrade -y && apt autoremove -y	
 
-	then	echo "================================"
-			echo " "		
-			echo "        REBOOTING SERVER        "				
-		    echo " "
-			echo "================================"
-			sleep 5 
-			systemctl reboot
-
-	else	echo "server failed to update" >> $log
-
-	fi
 }
 
 
@@ -71,7 +55,7 @@ function pkgs(){
 function cron(){
 	
 	echo "# updates entire system and reboots every monday @0200L" >> $tab
-	echo "  0  2  *  *  1 root       apt update -y && apt upgrade -y && shutdown -r" >> $tab
+	echo "  0  2  *  *  1 root       apt update -y && apt upgrade -y && systemctl reboot" >> $tab
 
 }
 
@@ -79,14 +63,19 @@ function cron(){
 # locks root account and adds to $PATH
 function pass(){
 
+	echo "extending PATH, please enter your username"
+	sleep 2
+	read -p "username : " user 
+	echo "export PATH=$PATH:/sbin:/usr/sbin:/usr/local/sbin/" >> /home/"$user"/.bashrc
+	sleep 2
+	
 	echo "locking root account"
 	sleep 2	
 	passwd -l root 
 	sleep 2
 
-    echo "export PATH=$PATH:/usr/local/sbin:/usr/sbin:/sbin" >> $path
-
 } 
+
 
 function tail(){
 
@@ -122,8 +111,20 @@ function dock(){
 
 
 
-# script itself 
-if check-root && pass && cron && tail && pkgs
-then echo "G2G" >> $log
-else echo "script failed" >> $log
+# script 
+if check-root && pass && cron && pkgs && tail && dock
+
+then
+		
+			echo "================================"
+			echo " "
+			echo "        SCRIPT COMPLETED        "		
+			echo "        REBOOTING SERVER        "				
+		    echo " "
+			echo "================================"
+			sleep 5 
+			systemctl reboot
+
+else echo "script failed ;(" 
+
 fi
