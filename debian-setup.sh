@@ -1,6 +1,6 @@
 #!/bin/bash
 # setup's personal servers for debian based systems
-# reqs : debian installed with doas setup
+# requirement is debian installed with doas setup
 
 # variables
 PATH=/sbin:/bin:/usr/sbin:/usr/bin
@@ -48,22 +48,18 @@ fi
 
 
 # updates system and reboots 
-function update(){
+function pkgs(){
 
-	
-		if
-		    apt install tuned needrestart && apt update -y && apt upgrade -y && apt autoremove -y	
-		then
-			echo "================================"
+	if apt install tuned needrestart && apt update -y && apt upgrade -y && apt autoremove -y	
+	then	echo "================================"
 			echo " "		
 			echo "        REBOOTING SERVER        "				
 		    echo " "
 			echo "================================"
 			sleep 5 
 			systemctl reboot
-		else
-			echo "server failed to update" >> $log
-		fi
+	else	echo "server failed to update" >> $log
+	fi
 }
 
 
@@ -94,10 +90,16 @@ function tail(){
 }
 
 
+function docker(){
+
+
+
+}
+
 
 
 # script itself 
-if check-root && pass && cron && tail && update 
+if check-root && pass && cron && tail && pkgs
 then echo "GG" >> $log
 else echo "script failed" >> $log
-fi  
+fi
