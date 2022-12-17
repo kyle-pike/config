@@ -4,15 +4,15 @@
 
 # variables
 PATH=/sbin:/bin:/usr/sbin:/usr/bin
-log=/home/$USER/log
+log=/home/$name/log
 tab=/etc/crontab
-path=/home/$USER/.bashrc
+path=/home/$name/.bashrc
 
 # exit if errors during script 
 set -e 
 
 # create log file
-touch /home/$USER/log
+#touch /home/$name/log
 
 # intro prompt 
 cat <<"EOF" 
@@ -40,9 +40,10 @@ echo 1
 function check-root(){
 
     if [ "$EUID" -ne 0 ]
-    then echo "incorrect permissions, Please run as root by then run the script again"
-    exit
-fi
+
+    then echo "incorrect permissions, Please run as root by then run the script again"; exit
+
+	fi
 
 }
 
@@ -51,6 +52,7 @@ fi
 function pkgs(){
 
 	if apt install tuned needrestart && apt update -y && apt upgrade -y && apt autoremove -y	
+
 	then	echo "================================"
 			echo " "		
 			echo "        REBOOTING SERVER        "				
@@ -58,7 +60,9 @@ function pkgs(){
 			echo "================================"
 			sleep 5 
 			systemctl reboot
+
 	else	echo "server failed to update" >> $log
+
 	fi
 }
 
@@ -68,6 +72,7 @@ function cron(){
 	
 	echo "# updates entire system and reboots every monday @0200L" >> $tab
 	echo "  0  2  *  *  1 root       apt update -y && apt upgrade -y && shutdown -r" >> $tab
+
 }
 
 
@@ -80,6 +85,7 @@ function pass(){
 	sleep 2
 
     "export PATH=$PATH:/usr/local/sbin:/usr/sbin:/sbin" >> $path
+
 } 
 
 function tail(){
@@ -87,12 +93,30 @@ function tail(){
     echo "installing tailscale vpn"
     sleep 2
 	curl -fsSL https://tailscale.com/install.sh | sh
+
 }
 
 
-function docker(){
+function dock(){
 
+	if 
+		apt install ca-certificates curl gnupg lsb-release
+	    mkdir -p /etc/apt/keyrings
+	    curl -fsSL https://download.docker.com/linux/debian/gpg | gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+       
+	   	echo \
+       	"deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/debian \
+       	$(lsb_release -cs) stable" | tee /etc/apt/sources.list.d/docker.list > /dev/null
+   	   
+	  	apt install docker-ce docker-ce-cli containerd.io docker-compose-plugin
 
+        docker run hello-world > /dev/null | grep -ie "Hello from Docker"
+
+	then echo "Docker has been installed"
+
+	else echo "Docker has failed to install"
+
+	fi 
 
 }
 
