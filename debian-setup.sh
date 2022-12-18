@@ -56,7 +56,7 @@ function cron(){
 function pass(){
 
     echo "extending PATH, please enter your username"
-    sleep 2
+    sleep 1
     read -p "username : " user 
     echo "export PATH=$PATH:/sbin:/usr/sbin:/usr/local/sbin/:usr/local/bin/" >> /home/"$user"/.bashrc
 
@@ -72,7 +72,7 @@ function tail(){
     echo "========================"
     echo "installing tailscale vpn"
     echo "========================"
-    sleep 2
+    sleep 5
     curl -fsSL https://tailscale.com/install.sh | sh
 
 }
@@ -83,7 +83,7 @@ function dock(){
     echo "================="
     echo "Installing docker"
     echo "================="
-    sleep 2
+    sleep 5
     apt install -y ca-certificates curl gnupg lsb-release
     mkdir -p /etc/apt/keyrings
     curl -fsSL https://download.docker.com/linux/debian/gpg | gpg --dearmor -o /etc/apt/keyrings/docker.gpg
@@ -96,7 +96,7 @@ function dock(){
 
 
 # script 
-#### include supress output, firewall
+#### include supress output, firewall, docker containers update on crontab
 if check-root && pass && cron && pkgs && tail && dock
 
 then cat <<"EOF"
