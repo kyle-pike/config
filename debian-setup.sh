@@ -38,6 +38,10 @@ function check-root(){
 # installs system packages and updates
 function pkgs(){
 
+    echo "==============="
+    echo "updating server"
+    echo "==============="
+    sleep 5
     apt install curl tuned needrestart -y && apt update -y && apt upgrade -y && apt autoremove -y	
 
 }
@@ -96,7 +100,7 @@ function dock(){
 
 
 # script 
-#### include supress output, firewall, docker containers update on crontab
+### TODO supress output?, firewall, docker containers update on crontab
 if check-root && pass && cron && pkgs && tail && dock
 
 then cat <<"EOF"
