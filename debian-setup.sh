@@ -82,12 +82,11 @@ function tail(){
               echo "========================"
               sleep 5
               curl -fsSL https://tailscale.com/install.sh | sh; break;;
-
         No )  echo "========================"
               echo "   continuing script    "
               echo "========================";;
     esac
-  done 
+  done
 }
 
 
