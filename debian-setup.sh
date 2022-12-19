@@ -72,21 +72,26 @@ function pass(){
 
 
 # install tailscale VPN
-function tail()(
+function tail(){
 
-    echo "Would you like to install Tailscale VPN?"
-select yn in "Yes" "No"; do
-    case $yn in
-        Yes ) echo "========================"
-              echo "installing tailscale vpn"
-              echo "========================"
-              sleep 5
-              curl -fsSL https://tailscale.com/install.sh | sh; break;;
-        No ) exit;;
-    esac
-done
+    read -p "Would you like to install Tailscale VPN (y/n)? " answer
+    case ${answer:0:1} in
+      y|Y )
+          echo "========================"
+          echo "installing tailscale vpn"
+          echo "========================"
+          sleep 5
+          curl -fsSL https://tailscale.com/install.sh | sh
+      ;;
+      * )
+          echo "========================"
+          echo "   continuing script    "
+          echo "========================"
+      ;;
+    esac 
 
-)
+}
+
 
 
 # install docker
