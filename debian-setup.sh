@@ -72,35 +72,21 @@ function pass(){
 
 
 # install tailscale VPN
-### TODO , need to write case statement
 function tail(){
 
     echo "Would you like to install Tailscale VPN?"
-    read -p "yes or no ? " choice
-
-    case $choice in 
-
-    yes)
-      echo "========================"
-      echo "installing tailscale vpn"
-      echo "========================"
-      sleep 5
-      curl -fsSL https://tailscale.com/install.sh | sh
-      ;;
-
-    no) 
-      echo "========================"
-      echo "   continuing script    "
-      echo "========================"
-      sleep 5
-      ;;
-
-    *)
-      echo "please select yes or no"
-      sleep 3
-      ;; 
-    
+select yn in "Yes" "No"; do
+    case $yn in
+        Yes ) echo "========================"
+              echo "installing tailscale vpn"
+              echo "========================"
+              sleep 5
+              curl -fsSL https://tailscale.com/install.sh | sh; break;;
+        No )  echo "========================"
+              echo "   continuing script    "
+              echo "========================";;
     esac
+done
 
 }
 
