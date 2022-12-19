@@ -75,18 +75,18 @@ function pass(){
 function tail(){
 
     echo "Would you like to install Tailscale VPN?"
-select yn in "Yes" "No"; do
+    select yn in "Yes" "No"; do
     case $yn in
         Yes ) echo "========================"
               echo "installing tailscale vpn"
               echo "========================"
               sleep 5
               curl -fsSL https://tailscale.com/install.sh | sh; break;;
+
         No )  echo "========================"
               echo "   continuing script    "
               echo "========================";;
     esac
-done
 
 }
 
