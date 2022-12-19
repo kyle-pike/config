@@ -75,7 +75,7 @@ function pass(){
 function tail(){
 
     echo "Would you like to install Tailscale VPN?"
-    select yn in "Yes" "No"; do
+  select yn in "Yes" "No"; do
     case $yn in
         Yes ) echo "========================"
               echo "installing tailscale vpn"
@@ -87,7 +87,7 @@ function tail(){
               echo "   continuing script    "
               echo "========================";;
     esac
-
+  done 
 }
 
 
