@@ -41,7 +41,7 @@ function pkgs(){
     echo "==============="
     echo "updating server"
     echo "==============="
-    sleep 5
+    sleep 3
     apt install curl tuned needrestart -y && apt update -y && apt upgrade -y && apt autoremove -y	
 
 }
@@ -59,13 +59,15 @@ function cron(){
 # locks root account and extends $PATH
 function pass(){
 
+    echo "=========================================="
     echo "extending PATH, please enter your username"
-    sleep 1
+    echo "=========================================="
     read -p "username : " user 
     echo "export PATH=$PATH:/sbin:/usr/sbin:/usr/local/sbin/:usr/local/bin/" >> /home/"$user"/.bashrc
-
+    echo "===================="
     echo "locking root account"
-    sleep 2
+    echo "===================="
+    sleep 3
     passwd -l root
 
 }
@@ -80,13 +82,14 @@ function tail(){
           echo "========================"
           echo "installing tailscale vpn"
           echo "========================"
-          sleep 5
+          sleep 3
           curl -fsSL https://tailscale.com/install.sh | sh
       ;;
       * )
           echo "========================"
           echo "   continuing script    "
           echo "========================"
+          sleep 3
       ;;
     esac 
 
@@ -100,7 +103,7 @@ function dock(){
     echo "================="
     echo "Installing docker"
     echo "================="
-    sleep 5
+    sleep 3
     apt install -y ca-certificates curl gnupg lsb-release
     mkdir -p /etc/apt/keyrings
     curl -fsSL https://download.docker.com/linux/debian/gpg | gpg --dearmor -o /etc/apt/keyrings/docker.gpg
@@ -126,7 +129,7 @@ then cat <<"EOF"
     ================================
 
 EOF
-    sleep 2
+    sleep 3
     systemctl reboot
 
 else echo "script failed ;(" 
