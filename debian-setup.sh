@@ -71,17 +71,41 @@ function pass(){
 }
 
 
+# install tailscale VPN
+### TODO , need to write case statement
 function tail(){
 
-    echo "========================"
-    echo "installing tailscale vpn"
-    echo "========================"
-    sleep 5
-    curl -fsSL https://tailscale.com/install.sh | sh
+    echo "Would you like to install Tailscale VPN?"
+    read -p "yes or no ? " choice
+
+    case $choice in 
+
+    yes)
+      echo "========================"
+      echo "installing tailscale vpn"
+      echo "========================"
+      sleep 5
+      curl -fsSL https://tailscale.com/install.sh | sh
+      ;;
+
+    no) 
+      echo "========================"
+      echo "   continuing script    "
+      echo "========================"
+      sleep 5
+      ;;
+
+    *)
+      echo "please select yes or no"
+      sleep 3
+      ;; 
+    
+    esac
 
 }
 
 
+# install docker
 function dock(){
 
     echo "================="
@@ -100,7 +124,7 @@ function dock(){
 
 
 # script 
-### TODO supress output?, firewall, docker containers update on crontab
+### TODO supress output?, firewall, docker containers in another script update on crontab
 if check-root && pass && cron && pkgs && tail && dock
 
 then cat <<"EOF"
