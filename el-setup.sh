@@ -1,116 +1,59 @@
 #!/bin/bash
-# adjusts putzke's new server/laptop #
 
-# variables
-PATH=/sbin:/bin:/usr/sbin:/usr/bin
-log=/home/admin/log
-tab=/etc/crontab
+### Pike's Server config ###
+### requirements, rhel based server ### 
 
-# exit if errors during script 
-set -e 
+# goals
+# move to ansible 
+# put updates on log and to standard output 
 
-# create log file
-touch /home/admin/log
 
-# intro prompt 
-cat <<"EOF" 
+# variables #
+log=/home/$USER/log
 
-============================================
+# functions #
 
-This script will update/reboot,
-performance tune and add a mx downtime
-@0200L every Monday for this server
-
-============================================
-EOF
-sleep 10
-echo "executing script in 5 ;)"
-sleep 1
-echo 4 
-sleep 1
-echo 3
-sleep 1
-echo 2 
-sleep 1
-echo 1 
-
-# ensures correct permissions to execute script 
+# check if root 
 function check-root(){
 
     if [ "$EUID" -ne 0 ]
-    then echo "incorrect permissions, Please run as root by executing sudo -i then running the script again"
+    then echo "Please run as root"
     exit
 fi
 
 }
 
+# configures dnf to install faster
+function dnf-setup(){
 
-# updates system and reboots 
-function update(){
+    {
+    echo " "
+    echo "# custom edits #"
+    echo "max_parallel_downloads=20"
+    echo "fastestmirror=True"
+    } >> /etc/dnf/dnf.conf
 
-	
-		if
-			dnf upgrade -y && dnf autoremove -y 
-		then
-			echo "================================"
-			echo " "		
-			echo "        REBOOTING SERVER        "				
-		    echo " "
-			echo "================================"
-			sleep 5 
-			systemctl reboot
-		else
-			echo "server failed to update" >> $log
-		fi
+}
+
+# updates system and install neccessary software 
+function pkgs(){
+
+    dnf upgrade -y && dnf install epel-release -y\
+    && dnf install ranger ncdu podman podman-compose\
+    vim dnf-automatic policycoreutils-python-utils bash-completion\
+    setroubleshoot-server setools-console -y
+
 }
 
 
-# adds to system schedule to update and reboot every monday @0200L
-function cron(){
-	
-	echo "# updates entire system and reboots every monday @0200L" >> $tab
-	echo "  0  2  *  *  1 root       dnf upgrade -y && shutdown -r" >> $tab
-}
+### script ### 
 
+if check-root
 
-# fast af boi
-function setup(){
+then 
+    dnf-setup && pkgs
 
-	tuned-adm profile throughput-performance && systemctl enable --now cockpit.socket
-}
+else 
+    echo "script failed"
 
-
-# changes password for admin account and locks root account
-function pass(){
-
-	echo "locking root account"
-	sleep 2	
-	passwd -l root 
-	sleep 2
-	echo " "
-	cat <<"EOF"
-	============================================
-	
-	 You will be prompted to create a new admin 
-		password, DO NOT LOSE THIS!
-	
-	============================================
-	
-EOF
-
-	sleep 10
-	passwd admin 
-} 
-
-function tail(){
-	curl -fsSL https://tailscale.com/install.sh | sh
-}
-
-
-
-
-# script itself 
-if check-root && pass && cron && setup && tail && update 
-then echo "GG" >> $log
-else echo "script failed" >> $log
-fi  
+fi
