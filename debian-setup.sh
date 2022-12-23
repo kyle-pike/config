@@ -96,7 +96,6 @@ function tail(){
 }
 
 
-
 # install docker
 function dock(){
 
