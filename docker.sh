@@ -67,19 +67,9 @@ function container_install(){
 }
 
 
-# For loop for every single yml? or If statement using case function 
-# for loop goes through text files containing all yml files, do part contains case statement
-
 # script
-
-check-root
-
-directories
+check-root && directories
 
 for CONTAINER in 
 do prompt
 done 
-
-
-# install one container at time or add desired containers to tmp file/variable then
-# install all at once?
