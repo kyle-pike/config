@@ -1,0 +1,16 @@
+---
+version: "2.1"
+services:
+  calibre:
+    image: lscr.io/linuxserver/calibre:latest
+    container_name: calibre
+    environment:
+      - PUID=1001
+      - PGID=1001
+      - TZ=$(cat /etc/timezone)
+    volumes:
+      - $MEDIA/calibre:/config
+    ports:
+      - 8081:8080
+      - 8082:8081
+    restart: always

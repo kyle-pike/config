@@ -1,0 +1,17 @@
+---
+version: "2.1"
+services:
+  sabnzbd:
+    image: lscr.io/linuxserver/sabnzbd:latest
+    container_name: sabnzbd
+    environment:
+      - PUID=1006
+      - PGID=1101
+      - TZ=$(cat /etc/timezone)
+    volumes:
+      - $CONFIG/sabnzbd:/config
+      - $DOWNLOADS:/downloads
+      - $DOWNLOADS/incomplete:/incomplete-downloads 
+    ports:
+      - 8080:8080
+    restart: always

@@ -1,0 +1,17 @@
+---
+version: "2.1"
+services:
+  lidarr:
+    image: lscr.io/linuxserver/lidarr:latest
+    container_name: lidarr
+    environment:
+      - PUID=1007
+      - PGID=1101
+      - TZ=$(cat /etc/timezone)
+    volumes:
+      - $CONFIG:/config
+      - $MEDIA/music:/music
+      - $DOWNLOADS:/downloads
+    ports:
+      - 8686:8686
+    restart: always

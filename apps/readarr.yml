@@ -1,0 +1,17 @@
+---
+version: "2.1"
+services:
+  readarr:
+    image: lscr.io/linuxserver/readarr:develop
+    container_name: readarr
+    environment:
+      - PUID=1008
+      - PGID=1101
+      - TZ=$(cat /etc/timezone)
+    volumes:
+      - $CONFIG/readarr:/config
+      - $MEDIA/books:/books 
+      - $DOWNLOADS:/downloads
+    ports:
+      - 8787:8787
+    restart: always

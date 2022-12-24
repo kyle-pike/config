@@ -1,0 +1,17 @@
+---
+version: "1.1"
+services:
+  radarr:
+    image: lscr.io/linuxserver/radarr:latest
+    container_name: radarr
+    environment:
+      - PUID=1003
+      - PGID=1100
+      - TZ=$(cat /etc/timezone)
+    volumes:
+      - $CONFIG/radarr:/config
+      - $MEDIA/movies:/movies
+      - $DOWNLOADS:/downloads
+    ports:
+      - 7877:7878
+    restart: always
