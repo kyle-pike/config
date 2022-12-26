@@ -3,7 +3,7 @@
 
 
 # variables
-CALIBRE= # insert link 
+CALIBRE=$(curl https://raw.githubusercontent.com/kyle-pike/config/public/apps/calibre.yml)
 
 # exit if errors during script 
 set -e 
@@ -70,6 +70,6 @@ function container_install(){
 # script
 check-root && directories
 
-for CONTAINER in 
+for CONTAINER in $CALIBRE
 do prompt
-done 
+done
