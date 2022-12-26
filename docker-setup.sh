@@ -56,6 +56,3 @@ do
     esac 
 
 done
-
-
-
