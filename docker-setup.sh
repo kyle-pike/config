@@ -3,7 +3,7 @@
 
 
 # variables
-CALIBRE=
+calibre=
 
 
 # exit if errors during script 
@@ -62,8 +62,8 @@ function prompt(){
 function container_install(){
 
     cd $CONFIG/$CONTAINER
-    docker-compose pull
-    docker-compose up -d 
+    docker compose pull
+    docker compose up -d 
 
 }
 
@@ -71,6 +71,18 @@ function container_install(){
 # script
 check-root && directories
 
-for i in 
-do prompt
+#for i in 
+#do prompt
+#done
+
+for CONTAINER in $HOME/config/apps/*
+do
+
+    cd $CONFIG/$CONTAINER
+    docker compose pull
+    docker compose up -d
+
 done
+
+
+
