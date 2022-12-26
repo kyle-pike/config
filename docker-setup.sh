@@ -2,10 +2,6 @@
 # installs desired containers
 
 
-# variables
-calibre=
-
-
 # exit if errors during script 
 set -e 
 
@@ -34,53 +30,30 @@ read -p "Please enter desired location for the media directory: " MEDIA
 }
 
 
-# asks if you would like to install the desired container
-function prompt(){
+# script
+check-root && directories
 
-    read -p "Would you like to install Calibre (y/n)? " answer
+
+for CONTAINER in /$USER/config/apps/*
+do
+
+    read -p "Would you like to install $CONTAINER (y/n)? " answer
     case ${answer:0:1} in
       y|Y )
           echo "========================"
-          echo "   installing Calibre   "
+          echo " installing $CONTAINER  "
           echo "========================"
-          container_install
-          sleep 3
+          cd $CONTAINER
+          docker compose pull
+          docker compose up -d
       ;;
       * )
           echo "========================"
           echo "   continuing script    "
           echo "========================"
-          sleep 3
+          sleep 2
       ;;
     esac 
-    
-
-}
-
-
-# installs the container
-function container_install(){
-
-    cd $CONFIG/$CONTAINER
-    docker compose pull
-    docker compose up -d 
-
-}
-
-
-# script
-check-root && directories
-
-#for i in 
-#do prompt
-#done
-
-for CONTAINER in $HOME/config/apps/*
-do
-
-    cd $CONFIG/$CONTAINER
-    docker compose pull
-    docker compose up -d
 
 done
 
