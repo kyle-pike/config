@@ -5,8 +5,14 @@
 PATH=/sbin:/bin:/usr/sbin:/usr/bin
 tab=/etc/crontab
 
+
 # exit if errors during script 
 set -e 
+
+
+# source common functions and variables 
+source /$HOME/config/common.sh
+
 
 # intro prompt 
 cat <<"EOF" 
@@ -21,18 +27,6 @@ cat <<"EOF"
 
 EOF
 sleep 6
-
-
-# ensures correct permissions to execute script 
-function check-root(){
-
-    if [ "$EUID" -ne 0 ]
-
-    then echo "incorrect permissions, Please run as root by then run the script again"; exit
-
-    fi
-
-}
 
 
 # installs system packages and updates
