@@ -5,7 +5,7 @@ services:
     image: lscr.io/linuxserver/radarr:latest
     container_name: radarr
     env_file:
-      - ../.envv
+      - ../.env
     environment:
       - PUID=1004
       - PGID=1001
@@ -13,7 +13,7 @@ services:
     volumes:
       - ${CONFIG}/radarr:/config
       - ${MEDIA}/movies:/movies
-      - ${DOWNLOADS}:/downloads
+      - ${DOWNLOADS}/:/downloads
     ports:
       - 7878:7878
     restart: always

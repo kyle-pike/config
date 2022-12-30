@@ -12,7 +12,7 @@ services:
       - TZ=${TZ}
     volumes:
       - ${CONFIG}/sabnzbd:/config
-      - ${DOWNLOADS}:/downloads
+      - ${DOWNLOADS}/:/downloads
       - ${DOWNLOADS}/incomplete:/incomplete-downloads 
     ports:
       - 8080:8080

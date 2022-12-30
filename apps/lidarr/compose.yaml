@@ -13,7 +13,7 @@ services:
     volumes:
       - ${CONFIG}/lidarr:/config
       - ${MEDIA}/music:/music
-      - ${DOWNLOADS}:/downloads
+      - ${DOWNLOADS}/:/downloads
     ports:
       - 8686:8686
     restart: always
