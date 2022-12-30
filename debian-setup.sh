@@ -117,7 +117,7 @@ function install_docker(){
 
 
 # script 
-### TODO supress output?, firewall, docker containers in another script update on crontab
+### TODO firewall
 if check-root && pass && cron && pkgs && install_tailscale && install_docker
 
 then cat <<"EOF"
