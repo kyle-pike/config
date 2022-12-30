@@ -2,7 +2,7 @@
 # installs desired containers
 
 # variables
-DOCKER_ENV=$HOME/config/apps/.env
+ENV_FILE=$HOME/config/apps/.env
 
 
 # exit if errors during script 
@@ -10,11 +10,11 @@ set -e
 
 
 # source common functions and variables 
-source /$HOME/config/common.sh
+source $HOME/config/common.sh
 
 
 # requests what directories to use for docker and places in environment file
-function directories(){
+function docker_env(){
 
 read -p "Please enter desired location for the downloads directory: " DOWNLOADS
 
@@ -23,12 +23,13 @@ read -p "Please enter desired location for the config directory: " CONFIG
 read -p "Please enter desired location for the media directory: " MEDIA
 
 
-for env in $DOCKER_ENV
+for txt in $ENV_FILE
 do
-
-    sed -i "s/downloads/${DOWNLOADS}/g" 
-    sed -i "s/config/${CONFIG}/g"
-    sed -i "s/media/${MEDIA}/g"
+    
+    sed -i "s.tz.$(cat /etc/timezone).g" "$ENV_FILE"
+    sed -i "s/downloads/${DOWNLOADS}/g" "$ENV_FILE"
+    sed -i "s/config/${CONFIG}/g" "$ENV_FILE"
+    sed -i "s/media/${MEDIA}/g" "$ENV_FILE"
 
 done
 
@@ -36,10 +37,10 @@ done
 
 
 # script
-check-root && directories
+check-root && docker_env
 
 
-for CONTAINER in /$USER/config/apps/*
+for CONTAINER in $HOME/config/apps/*
 do
 
     read -p "Would you like to install $CONTAINER (y/n)? " answer
@@ -50,7 +51,7 @@ do
           echo "========================"
           cd $CONTAINER
           docker compose pull
-          docker compose up -d
+          docker compose --env-file ../.env up -d
       ;;
       * )
           echo "========================"
