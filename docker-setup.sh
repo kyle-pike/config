@@ -1,6 +1,9 @@
 #!/bin/bash
 # installs desired containers
 
+# variables
+DOCKER_ENV=$HOME/config/apps/.env
+
 
 # exit if errors during script 
 set -e 
@@ -10,7 +13,7 @@ set -e
 source /$HOME/config/common.sh
 
 
-# requests what directories to use for docker
+# requests what directories to use for docker and places in environment file
 function directories(){
 
 read -p "Please enter desired location for the downloads directory: " DOWNLOADS
@@ -18,6 +21,16 @@ read -p "Please enter desired location for the downloads directory: " DOWNLOADS
 read -p "Please enter desired location for the config directory: " CONFIG
 
 read -p "Please enter desired location for the media directory: " MEDIA
+
+
+for env in $DOCKER_ENV
+do
+
+    sed -i "s/downloads/${DOWNLOADS}/g" 
+    sed -i "s/config/${CONFIG}/g"
+    sed -i "s/media/${MEDIA}/g"
+
+done
 
 }
 

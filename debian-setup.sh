@@ -11,7 +11,7 @@ set -e
 
 
 # source common functions and variables 
-source /$HOME/config/common.sh
+source $HOME/config/common.sh
 
 
 # intro prompt 
