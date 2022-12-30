@@ -56,7 +56,7 @@ function cron(){
 
 # script
 # TODO , create locked user accounts per container
-check-root && docker_env
+check-root && docker_env 
 
 
 for CONTAINER in apps/*
@@ -80,6 +80,8 @@ do
     esac
 
 done
+
+cron
 
 cat <<"EOF"
 
