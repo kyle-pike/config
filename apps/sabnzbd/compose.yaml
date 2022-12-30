@@ -4,6 +4,8 @@ services:
   sabnzbd:
     image: lscr.io/linuxserver/sabnzbd:latest
     container_name: sabnzbd
+    env_file:
+      - ./apps/.env
     environment:
       - PUID=1006
       - PGID=1001

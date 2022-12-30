@@ -4,7 +4,6 @@
 # variables
 ENV_FILE=apps/.env
 
-
 # exit if errors during script
 set -e
 
@@ -59,7 +58,8 @@ do
           echo "========================"
           cd $CONTAINER
           docker compose pull
-          docker compose --env-file ../.env up -d
+          docker compose up -d
+          cd ..
       ;;
       * )
           echo "========================"

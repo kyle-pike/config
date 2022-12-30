@@ -4,6 +4,8 @@ services:
   radarr:
     image: lscr.io/linuxserver/radarr:latest
     container_name: radarr
+    env_file:
+      - ./apps/.env
     environment:
       - PUID=1004
       - PGID=1001
