@@ -7,9 +7,9 @@ services:
     environment:
       - PUID=1001
       - PGID=1001
-      - TZ=$(cat /etc/timezone)
+      - TZ=${TZ}
     volumes:
-      - $MEDIA/calibre:/config
+      - ${MEDIA}/calibre:/config
     ports:
       - 8081:8080
       - 8082:8081
