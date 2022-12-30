@@ -2,14 +2,14 @@
 # installs desired containers
 
 # variables
-ENV_FILE=$HOME/config/apps/.env
+ENV_FILE=apps/.env
 
 
-# exit if errors during script 
-set -e 
+# exit if errors during script
+set -e
 
 
-# ensures correct permissions to execute script 
+# ensures correct permissions to execute script
 function check-root(){
 
     if [[ $UID != 0 ]]
@@ -33,11 +33,11 @@ read -p "Please enter desired location for the media directory: " MEDIA
 
 for txt in $ENV_FILE
 do
-    
+
     sed -i "s.tz.$(cat /etc/timezone).g" "$ENV_FILE"
-    sed -i "s/downloads/${DOWNLOADS}/g" "$ENV_FILE"
-    sed -i "s/config/${CONFIG}/g" "$ENV_FILE"
-    sed -i "s/media/${MEDIA}/g" "$ENV_FILE"
+    sed -i "s.downloads.${DOWNLOADS}.g" "$ENV_FILE"
+    sed -i "s.config.${CONFIG}.g" "$ENV_FILE"
+    sed -i "s.media.${MEDIA}.g" "$ENV_FILE"
 
 done
 
@@ -48,7 +48,7 @@ done
 check-root && docker_env
 
 
-for CONTAINER in $HOME/config/apps/*
+for CONTAINER in apps/*
 do
 
     read -p "Would you like to install $CONTAINER (y/n)? " answer
@@ -67,6 +67,17 @@ do
           echo "========================"
           sleep 2
       ;;
-    esac 
+    esac
 
 done
+
+then cat <<"EOF"
+
+    ================================
+
+            SCRIPT COMPLETED
+
+    ================================
+
+EOF
+    sleep 2
