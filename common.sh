@@ -1,5 +1,10 @@
-#!/usr/bin/env bash
+###variables###
 
+
+
+
+
+###functions###
 
 # ensures correct permissions to execute script 
 function check-root(){
