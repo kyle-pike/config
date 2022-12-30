@@ -2,7 +2,7 @@
 # installs desired containers
 
 # variables
-ENV_FILE=$HOME/config/apps/.env
+local ENV_FILE=$HOME/config/apps/.env
 
 
 # exit if errors during script 

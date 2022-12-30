@@ -3,7 +3,7 @@
 
 # variables
 PATH=/sbin:/bin:/usr/sbin:/usr/bin
-tab=/etc/crontab
+local tab=/etc/crontab
 
 
 # exit if errors during script 
@@ -28,7 +28,7 @@ sleep 6
 # ensures correct permissions to execute script 
 function check-root(){
 
-    if [ "$EUID" -ne 0 ]
+    if [[ $UID != 0 ]]
 
     then echo "incorrect permissions, Please run as root by then run the script again"; exit
 
