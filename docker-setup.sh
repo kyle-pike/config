@@ -44,6 +44,7 @@ done
 
 
 # script
+# TODO , create locked user accounts per container
 check-root && docker_env
 
 
