@@ -4,4 +4,4 @@
 
 wget https://github.com/kyle-pike/config/releases/download/v1.0/config.tar.gz
 tar -xzvf config.tar.gz; rm config.tar.gz
-sudo /config/debian-setup.sh
+sudo bash /config/debian-setup.sh
