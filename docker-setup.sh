@@ -56,10 +56,9 @@ do
           echo "========================"
           echo " installing $CONTAINER  "
           echo "========================"
-          cd $CONTAINER
-          docker compose pull
-          docker compose up -d
-          cd ..
+          docker compose --project-directory apps/$CONTAINER pull
+          docker compose --project-directory apps/$CONTAINER up -d
+       
       ;;
       * )
           echo "========================"

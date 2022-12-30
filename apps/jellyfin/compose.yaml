@@ -5,7 +5,7 @@ services:
     image: lscr.io/linuxserver/jellyfin:latest
     container_name: jellyfin
     env_file:
-      - ./apps/.env
+      - ../.env
     environment:
       - PUID=1002
       - PGID=1001

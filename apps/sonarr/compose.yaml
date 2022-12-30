@@ -5,7 +5,7 @@ services:
     image: lscr.io/linuxserver/sonarr:latest
     container_name: sonarr
     env_file:
-      - ./apps/.env
+      - ../.env
     environment:
       - PUID=1007
       - PGID=1001

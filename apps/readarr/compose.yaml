@@ -5,7 +5,7 @@ services:
     image: lscr.io/linuxserver/readarr:develop
     container_name: readarr
     env_file:
-      - ./apps/.env
+      - ../.env
     environment:
       - PUID=1005
       - PGID=1001

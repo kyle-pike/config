@@ -4,7 +4,7 @@ services:
   calibre:
     image: lscr.io/linuxserver/calibre:latest
     env_file:
-      - ./apps/.env
+      - ../.env
     container_name: calibre
     environment:
       - PUID=1001
