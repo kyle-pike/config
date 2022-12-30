@@ -68,7 +68,7 @@ function pass(){
 
 
 # install tailscale VPN
-function tail(){
+function install_tailscale(){
 
     read -p "Would you like to install Tailscale VPN (y/n)? " answer
     case ${answer:0:1} in
@@ -91,7 +91,7 @@ function tail(){
 
 
 # install docker
-function dock(){
+function install_docker(){
 
     echo "================="
     echo "Installing docker"
@@ -110,7 +110,7 @@ function dock(){
 
 # script 
 ### TODO supress output?, firewall, docker containers in another script update on crontab
-if check-root && pass && cron && pkgs && tail && dock
+if check-root && pass && cron && pkgs && install_tailscale && install_docker
 
 then cat <<"EOF"
 
