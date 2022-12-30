@@ -3,7 +3,7 @@
 
 # variables
 PATH=/sbin:/bin:/usr/sbin:/usr/bin
-local tab=/etc/crontab
+tab=/etc/crontab
 
 
 # exit if errors during script 
