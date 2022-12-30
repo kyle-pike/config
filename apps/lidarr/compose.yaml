@@ -5,13 +5,13 @@ services:
     image: lscr.io/linuxserver/lidarr:latest
     container_name: lidarr
     environment:
-      - PUID=1007
-      - PGID=1101
-      - TZ=$(cat /etc/timezone)
+      - PUID=1003
+      - PGID=1001
+      - TZ=${TZ}
     volumes:
-      - $CONFIG:/config
-      - $MEDIA/music:/music
-      - $DOWNLOADS:/downloads
+      - ${CONFIG}/lidarr:/config
+      - ${MEDIA}/music:/music
+      - ${DOWNLOADS}:/downloads
     ports:
       - 8686:8686
     restart: always

@@ -5,14 +5,13 @@ services:
     image: lscr.io/linuxserver/jellyfin:latest
     container_name: jellyfin
     environment:
-      - PUID=1005
-      - PGID=1101
-      - TZ=$(cat /etc/timezone)
-      - JELLYFIN_PublishedServerUrl=
+      - PUID=1002
+      - PGID=1001
+      - TZ=${TZ}
     volumes:
-      - $CONFIG/jellyfin:/config
-      - $MEDIA/tv:/data/tvshows,ro
-      - $MEDIA/movies:/data/movies,ro
+      - ${CONFIG}/jellyfin:/config
+      - ${MEDIA}/tv:/data/tvshows,ro
+      - ${MEDIA}/movies:/data/movies,ro
     devices:
       - /dev/dri/renderD128:/dev/dri/renderD128
       - /dev/dri/card0:/dev/dri/card0

@@ -5,13 +5,13 @@ services:
     image: lscr.io/linuxserver/sonarr:latest
     container_name: sonarr
     environment:
-      - PUID=1003
-      - PGID=1101
-      - TZ=$(cat /etc/timezone)
+      - PUID=1007
+      - PGID=1001
+      - TZ=${TZ}
     volumes:
-      - $CONFIG/sonarr:/config
-      - $MEDIA/tv:/tv
-      - $DOWNLOADS:/downloads 
+      - ${CONFIG}/sonarr:/config
+      - ${MEDIA}/tv:/tv
+      - ${DOWNLOADS}:/downloads 
     ports:
       - 8989:8989
     restart: always

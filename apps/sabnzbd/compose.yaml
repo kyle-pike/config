@@ -6,12 +6,12 @@ services:
     container_name: sabnzbd
     environment:
       - PUID=1006
-      - PGID=1101
-      - TZ=$(cat /etc/timezone)
+      - PGID=1001
+      - TZ=${TZ}
     volumes:
-      - $CONFIG/sabnzbd:/config
-      - $DOWNLOADS:/downloads
-      - $DOWNLOADS/incomplete:/incomplete-downloads 
+      - ${CONFIG}/sabnzbd:/config
+      - ${DOWNLOADS}:/downloads
+      - ${DOWNLOADS}/incomplete:/incomplete-downloads 
     ports:
       - 8080:8080
     restart: always

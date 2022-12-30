@@ -5,13 +5,13 @@ services:
     image: lscr.io/linuxserver/transmission:latest
     container_name: transmission
     environment:
-      - PUID=1002
-      - PGID=1101
-      - TZ=$(cat /etc/timezone)
+      - PUID=1008
+      - PGID=1001
+      - TZ=${TZ}
       - TRANSMISSION_WEB_HOME=/flood-for-transmission/
     volumes:
-      - $CONFIG/transmission:/config
-      - $DOWNLOADS:/downloads
+      - ${CONFIG}/transmission:/config
+      - ${DOWNLOADS}:/downloads
     ports:
       - 9091:9091
       - 51413:51413
