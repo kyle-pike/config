@@ -64,7 +64,6 @@ do
           echo "========================"
           echo "   continuing script    "
           echo "========================"
-          sleep 2
       ;;
     esac
 
