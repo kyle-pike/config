@@ -10,10 +10,6 @@ tab=/etc/crontab
 set -e 
 
 
-# source common functions and variables 
-source $HOME/config/common.sh
-
-
 # intro prompt 
 cat <<"EOF" 
 
@@ -29,23 +25,14 @@ EOF
 sleep 6
 
 
-# installs system packages and updates
-function pkgs(){
+# ensures correct permissions to execute script 
+function check-root(){
 
-    echo "==============="
-    echo "updating server"
-    echo "==============="
-    sleep 3
-    apt install curl tuned needrestart -y && apt update -y && apt upgrade -y && apt autoremove -y	
+    if [ "$EUID" -ne 0 ]
 
-}
+    then echo "incorrect permissions, Please run as root by then run the script again"; exit
 
-
-# adds to system schedule to update and reboot every monday @0200L
-function cron(){
-
-    echo "# updates entire system and reboots every monday @0200L" >> $tab
-    echo "  0  2  *  *  1 root       apt update -y && apt upgrade -y && systemctl reboot" >> $tab
+    fi
 
 }
 
@@ -63,6 +50,27 @@ function pass(){
     echo "===================="
     sleep 3
     passwd -l root
+
+}
+
+
+# adds to system schedule to update and reboot every monday @0200L
+function cron(){
+
+    echo "# updates entire system and reboots every monday @0200L" >> $tab
+    echo "  0  2  *  *  1 root       apt update -y && apt upgrade -y && systemctl reboot" >> $tab
+
+}
+
+
+# installs system packages and updates
+function pkgs(){
+
+    echo "==============="
+    echo "updating server"
+    echo "==============="
+    sleep 3
+    apt install curl tuned needrestart -y && apt update -y && apt upgrade -y && apt autoremove -y	
 
 }
 
