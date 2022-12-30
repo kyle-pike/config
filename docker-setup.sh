@@ -3,6 +3,7 @@
 
 # variables
 ENV_FILE=apps/.env
+tab=/etc/crontab
 
 # exit if errors during script
 set -e
@@ -39,6 +40,16 @@ do
     sed -i "s.media.${MEDIA}.g" "$ENV_FILE"
 
 done
+
+}
+
+
+# adds to system schedule to update and reboot every monday @0200L
+function cron(){
+
+    mv docker-update.sh /usr/local/bin/
+    echo "# updates docker containers every monday @0300L" >> $tab
+    echo "  0  3  *  *  1 root       /usr/local/bin/docker-update.sh" >> $tab
 
 }
 
