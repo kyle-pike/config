@@ -56,7 +56,7 @@ function cron(){
 
 
 # script
-# TODO , create locked user accounts per container
+# TODO : create locked user accounts per container, include monitoring!
 check-root && docker_env 
 
 
