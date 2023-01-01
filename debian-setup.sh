@@ -44,7 +44,6 @@ function lock_password(){
     echo "===================="
     echo "locking root account"
     echo "===================="
-    sleep 2
     passwd -l root
 
 }
@@ -65,7 +64,6 @@ function update_pkgs(){
     echo "==============="
     echo "updating server"
     echo "==============="
-    sleep 2
     apt install curl tuned needrestart -y && apt update -y && apt upgrade -y && apt autoremove -y	
 
 }
@@ -80,7 +78,6 @@ function install_tailscale(){
           echo "========================"
           echo "installing tailscale vpn"
           echo "========================"
-          sleep 2
           curl -fsSL https://tailscale.com/install.sh | sh
       ;;
       * )
@@ -103,7 +100,6 @@ function install_avahi(){
           echo "============================"
           echo "installing avahi mDNS daemon"
           echo "============================"
-          sleep 2
           apt install avahi-daemon
       ;;
       * )
