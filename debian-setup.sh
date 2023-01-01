@@ -93,6 +93,7 @@ function install_tailscale(){
 # optionally install avahi for mDNS
 function install_avahi(){
 
+    echo " "
     read -p "Would you like to install avahi-mDNS (y/n)? If you do not have a local DNS server please select yes" answer
     case ${answer:0:1} in
       y|Y )
@@ -132,7 +133,7 @@ function install_docker(){
 ### TODO firewall, modify /etc/fstab for nosuid, noexec, nodev
 if check-root && lock_password && cron && update_pkgs && install_tailscale && install_avahi && install_docker
 
-docker-setup.sh
+config/docker-setup.sh
 
 then cat <<"EOF"
 
