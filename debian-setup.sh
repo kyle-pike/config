@@ -132,7 +132,7 @@ function install_docker(){
 
 
 # script 
-### TODO firewall
+### TODO firewall, modify /etc/fstab for nosuid, noexec, nodev
 if check-root && lock_password && cron && update_pkgs && install_tailscale && install_avahi && install_docker
 
 then cat <<"EOF"
