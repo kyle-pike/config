@@ -49,13 +49,10 @@ done
 # adds to system schedule to update and reboot every monday @0200L
 function cron_docker(){
 
-    
-    
     chown root:root docker-update.sh
-    mv docker-update.sh /usr/local/bin/
     echo "# updates docker containers every monday @0300L" >> $TAB
-    echo "  0  3  *  *  1 root       /usr/local/bin/docker-update.sh" >> $TAB
-
+    echo "  0  3  *  *  1 root       $MAIN_FOLDER/config/docker-update.sh" >> $TAB
+    
 }
 
 
