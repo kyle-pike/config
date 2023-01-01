@@ -45,7 +45,7 @@ done
 
 
 # adds to system schedule to update and reboot every monday @0200L
-function cron(){
+function cron_docker(){
 
     chown root:root docker-update.sh
     mv docker-update.sh /usr/local/bin/
@@ -82,7 +82,7 @@ do
 
 done
 
-cron
+cron_docker
 
 cat <<"EOF"
 
