@@ -2,7 +2,7 @@
 # installs desired containers
 
 # variables
-ENV_FILE=apps/.env
+ENV_FILE=/home/$(logname)/config/apps/.env
 tab=/etc/crontab
 
 # exit if errors during script
@@ -21,10 +21,13 @@ function check-root(){
 }
 
 
-# requests what directories to use for docker and places in environment file
+# sets directories to use for docker and places in environment file
 function docker_env(){
 
-mkdir -p /home/$(logname)/downloads/incomplete
+
+mkdir -m 775 -p /home/$(logname)/downloads/incomplete
+chmod 775 /home/$(logname)/downloads
+chown -R 1000:1000 /home/$(logname)/downloads/
 
 read -p "Please enter desired location for the media directory: " MEDIA
 
@@ -54,7 +57,7 @@ function cron_docker(){
 
 # script
 # TODO : create locked user accounts per container, dashdot for monitoring, intend for script to be reran
-# !!! chown for who owns what folders, ie sabnzdb:media, 775 for downloads
+# !!! chown for who owns what folders, ie sabnzdb:media
 check-root && docker_env 
 
 

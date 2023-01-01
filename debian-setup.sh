@@ -41,9 +41,9 @@ function check-root(){
 function lock_password(){
     
     echo "export PATH=$PATH:/sbin:/usr/sbin:/usr/local/sbin/:usr/local/bin/" >> /home/$(logname)/.bashrc
-    echo "===================="
-    echo "locking root account"
-    echo "===================="
+    echo "======================================="
+    echo "locking root account and extending PATH"
+    echo "======================================="
     passwd -l root
 
 }
@@ -84,7 +84,6 @@ function install_tailscale(){
           echo "========================"
           echo "   continuing script    "
           echo "========================"
-          sleep 2
       ;;
     esac 
 
@@ -106,7 +105,6 @@ function install_avahi(){
           echo "========================"
           echo "   continuing script    "
           echo "========================"
-          sleep 2
       ;;
     esac 
 
@@ -119,7 +117,6 @@ function install_docker(){
     echo "================="
     echo "Installing docker"
     echo "================="
-    sleep 2
     apt install -y ca-certificates curl gnupg lsb-release
     mkdir -p /etc/apt/keyrings
     curl -fsSL https://download.docker.com/linux/debian/gpg | gpg --dearmor -o /etc/apt/keyrings/docker.gpg
