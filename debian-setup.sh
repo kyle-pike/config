@@ -38,7 +38,7 @@ function check-root(){
 
 
 # locks root account and extends $PATH
-function pass(){
+function lock_password(){
 
     echo "=========================================="
     echo "extending PATH, please enter your username"
@@ -48,7 +48,7 @@ function pass(){
     echo "===================="
     echo "locking root account"
     echo "===================="
-    sleep 3
+    sleep 2
     passwd -l root
 
 }
@@ -69,13 +69,13 @@ function pkgs(){
     echo "==============="
     echo "updating server"
     echo "==============="
-    sleep 3
+    sleep 2
     apt install curl tuned needrestart -y && apt update -y && apt upgrade -y && apt autoremove -y	
 
 }
 
 
-# install tailscale VPN
+# optionally install tailscale VPN
 function install_tailscale(){
 
     read -p "Would you like to install Tailscale VPN (y/n)? " answer
@@ -84,14 +84,37 @@ function install_tailscale(){
           echo "========================"
           echo "installing tailscale vpn"
           echo "========================"
-          sleep 3
+          sleep 2
           curl -fsSL https://tailscale.com/install.sh | sh
       ;;
       * )
           echo "========================"
           echo "   continuing script    "
           echo "========================"
-          sleep 3
+          sleep 2
+      ;;
+    esac 
+
+}
+
+
+# optionally install avahi for mDNS
+function install_avahi(){
+
+    read -p "Would you like to install avahi-mDNS (y/n)? If you do not have a local DNS server please select yes" answer
+    case ${answer:0:1} in
+      y|Y )
+          echo "============================"
+          echo "installing avahi mDNS daemon"
+          echo "============================"
+          sleep 2
+          apt install avahi-daemon
+      ;;
+      * )
+          echo "========================"
+          echo "   continuing script    "
+          echo "========================"
+          sleep 2
       ;;
     esac 
 
@@ -104,7 +127,7 @@ function install_docker(){
     echo "================="
     echo "Installing docker"
     echo "================="
-    sleep 3
+    sleep 2
     apt install -y ca-certificates curl gnupg lsb-release
     mkdir -p /etc/apt/keyrings
     curl -fsSL https://download.docker.com/linux/debian/gpg | gpg --dearmor -o /etc/apt/keyrings/docker.gpg
@@ -118,7 +141,7 @@ function install_docker(){
 
 # script 
 ### TODO firewall
-if check-root && pass && cron && pkgs && install_tailscale && install_docker
+if check-root && lock_password && cron && pkgs && install_tailscale && install_avahi && install_docker
 
 then cat <<"EOF"
 
@@ -130,7 +153,7 @@ then cat <<"EOF"
     ================================
 
 EOF
-    sleep 3
+    sleep 2
     systemctl reboot
 
 else echo "script failed ;(" 
