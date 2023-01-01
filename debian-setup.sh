@@ -64,7 +64,7 @@ function cron(){
 
 
 # installs system packages and updates
-function pkgs(){
+function update_pkgs(){
 
     echo "==============="
     echo "updating server"
@@ -141,7 +141,7 @@ function install_docker(){
 
 # script 
 ### TODO firewall
-if check-root && lock_password && cron && pkgs && install_tailscale && install_avahi && install_docker
+if check-root && lock_password && cron && update_pkgs && install_tailscale && install_avahi && install_docker
 
 then cat <<"EOF"
 
