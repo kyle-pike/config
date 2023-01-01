@@ -49,7 +49,7 @@ done
 # adds to system schedule to update and reboot every monday @0200L
 function cron_docker(){
 
-    chown root:root docker-update.sh
+    chown root:root $MAIN_FOLDER/config/docker-update.sh
     chmod 755 docker-update.sh
     echo "# updates docker containers every monday @0300L" >> $TAB
     echo "  0  3  *  *  1 root       $MAIN_FOLDER/config/docker-update.sh" >> $TAB
@@ -63,7 +63,7 @@ function cron_docker(){
 check-root && docker_env 
 
 
-for CONTAINER in apps/*
+for CONTAINER in $MAIN_FOLDER/config/apps/*
 do
 
     read -p "Would you like to install $CONTAINER (y/n)? " answer
