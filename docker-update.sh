@@ -12,7 +12,7 @@ LOG=/home/$(id -un 1000)/log
 
 if 
 
-    for CONTAINER in apps/*
+    for CONTAINER in /home/$(id -un 1000)/config/apps/*
     do
         docker compose --project-directory $CONTAINER pull
         docker compose --project-directory $CONTAINER up -d
@@ -23,12 +23,12 @@ if
 
 then
 
-    echo "containers updated @ [$date]" >> $LOG
+    echo "containers updated @ [$(date)]" >> $LOG
     echo " " >> $LOG
 
 else
 
-   echo "containers failed to update @ [$date]" >> $LOG
+   echo "containers failed to update @ [$(date)]" >> $LOG
    echo " " >> $LOG
 
 fi
