@@ -24,21 +24,18 @@ function check-root(){
 # requests what directories to use for docker and places in environment file
 function docker_env(){
 
-read -p "Please enter desired location for the downloads directory: " DOWNLOADS
-
-read -p "Please enter desired location for the config directory: " CONFIG
+mkdir -p /home/$(logname)/downloads/incomplete
 
 read -p "Please enter desired location for the media directory: " MEDIA
-
 
 for txt in $ENV_FILE
 do
 
     sed -i "s.tz.$(cat /etc/timezone).g" "$ENV_FILE"
-    sed -i "s.downloads.${DOWNLOADS}.g" "$ENV_FILE"
-    sed -i "s.config.${CONFIG}.g" "$ENV_FILE"
+    sed -i "s.downloads.$(cat /home/$logname/downloads).g" "$ENV_FILE"
+    sed -i "s.config.$(cat /home/$logname/config).g" "$ENV_FILE"
     sed -i "s.media.${MEDIA}.g" "$ENV_FILE"
-
+    
 done
 
 }
@@ -57,6 +54,7 @@ function cron_docker(){
 
 # script
 # TODO : create locked user accounts per container, dashdot for monitoring, intend for script to be reran
+# !!! chown for who owns what folders, ie sabnzdb:media, 775 for downloads
 check-root && docker_env 
 
 
