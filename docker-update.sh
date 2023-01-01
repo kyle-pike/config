@@ -7,6 +7,7 @@ PATH=/sbin:/bin:/usr/sbin:/usr/bin
 
 
 # script
+# TODO : reference $CONFIG instead of apps/*
 for CONTAINER in apps/*
 do
     docker compose --project-directory $CONTAINER pull
