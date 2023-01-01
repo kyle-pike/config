@@ -37,8 +37,8 @@ for txt in $ENV_FILE
 do
 
     sed -i "s.tz.$(cat /etc/timezone).g" "$ENV_FILE"
-    sed -i "s.downloads.$(cat /home/$(logname)/downloads).g" "$ENV_FILE"
-    sed -i "s.config.$(cat /home/$(logname)/config).g" "$ENV_FILE"
+    sed -i "s.downloads./home/$(logname)/downloads.g" "$ENV_FILE"
+    sed -i "s.config./home/$(logname)/config.g" "$ENV_FILE"
     sed -i "s.media.${MEDIA}.g" "$ENV_FILE"
     
 done
@@ -49,6 +49,7 @@ done
 # adds to system schedule to update and reboot every monday @0200L
 function cron_docker(){
 
+    touch $MAIN_FOLDER/log
     chown root:root $MAIN_FOLDER/config/docker-update.sh
     echo "# updates docker containers every monday @0300L" >> $TAB
     echo "  0  3  *  *  1 root       $MAIN_FOLDER/config/docker-update.sh" >> $TAB

@@ -11,5 +11,5 @@ mkdir config-"${LATEST_VERSION}"
 tar -xzf config.tar.gz -C config-"${LATEST_VERSION}" --strip-components=1
 rm config.tar.gz
 mv config* config
-chmod 700 config/*.sh*
+chmod 755 config/*.sh*
 sudo config/debian-setup.sh
