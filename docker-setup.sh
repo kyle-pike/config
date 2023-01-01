@@ -2,8 +2,10 @@
 # installs desired containers
 
 # variables
-ENV_FILE=/home/$(logname)/config/apps/.env
-tab=/etc/crontab
+ENV_FILE=$MAIN_FOLDER/config/apps/.env
+TAB=/etc/crontab
+MAIN_FOLDER=/home/$(logname)
+
 
 # exit if errors during script
 set -e
@@ -25,9 +27,9 @@ function check-root(){
 function docker_env(){
 
 
-mkdir -m 775 -p /home/$(logname)/downloads/incomplete
-chmod 775 /home/$(logname)/downloads
-chown -R 1000:1000 /home/$(logname)/downloads/
+mkdir -m 775 -p $MAIN_FOLDER/downloads/incomplete
+chmod 775 $MAIN_FOLDER/downloads
+chown -R 1000:1000 $MAIN_FOLDER/downloads/
 
 read -p "Please enter desired location for the media directory: " MEDIA
 
@@ -49,8 +51,8 @@ function cron_docker(){
 
     chown root:root docker-update.sh
     mv docker-update.sh /usr/local/bin/
-    echo "# updates docker containers every monday @0300L" >> $tab
-    echo "  0  3  *  *  1 root       /usr/local/bin/docker-update.sh" >> $tab
+    echo "# updates docker containers every monday @0300L" >> $TAB
+    echo "  0  3  *  *  1 root       /usr/local/bin/docker-update.sh" >> $TAB
 
 }
 

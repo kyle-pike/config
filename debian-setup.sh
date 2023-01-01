@@ -3,7 +3,7 @@
 
 # variables
 PATH=/sbin:/bin:/usr/sbin:/usr/bin
-tab=/etc/crontab
+TAB=/etc/crontab
 
 
 # exit if errors during script 
@@ -52,8 +52,8 @@ function lock_password(){
 # adds to system schedule to update and reboot every monday @0200L
 function cron(){
 
-    echo "# updates entire system and reboots every monday @0200L" >> $tab
-    echo "  0  2  *  *  1 root       apt update -y && apt upgrade -y && systemctl reboot" >> $tab
+    echo "# updates entire system and reboots every monday @0200L" >> $TAB
+    echo "  0  2  *  *  1 root       apt update -y && apt upgrade -y && systemctl reboot" >> $TAB
 
 }
 
