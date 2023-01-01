@@ -57,7 +57,7 @@ function cron_docker(){
 
 
 # script
-# TODO : create locked user accounts per container, dashdot for monitoring, intend for script to be reran
+# TODO : create locked user accounts per container, dashdot for monitoring, homarr, intend for script to be reran
 # !!! chown for who owns what folders, ie sabnzdb:media
 check-root && docker_env 
 
