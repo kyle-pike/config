@@ -50,6 +50,7 @@ done
 function cron_docker(){
 
     chown root:root docker-update.sh
+    chmod 755 docker-update.sh
     echo "# updates docker containers every monday @0300L" >> $TAB
     echo "  0  3  *  *  1 root       $MAIN_FOLDER/config/docker-update.sh" >> $TAB
     
