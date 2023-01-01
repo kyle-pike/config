@@ -2,7 +2,7 @@
 # installs desired containers
 
 # variables
-ENV_FILE=$MAIN_FOLDER/config/apps/.env
+ENV_FILE=/home/$(logname)/config/apps/.env
 TAB=/etc/crontab
 MAIN_FOLDER=/home/$(logname)
 
