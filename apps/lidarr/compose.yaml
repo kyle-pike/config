@@ -4,6 +4,8 @@ services:
   lidarr:
     image: lscr.io/linuxserver/lidarr:latest
     container_name: lidarr
+    env_file:
+      - .env
     environment:
       - PUID=1202
       - PGID=1100

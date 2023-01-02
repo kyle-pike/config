@@ -2,6 +2,8 @@
 version: "2.1"
 services:
   calibre:
+    env_file:
+      - .env
     image: lscr.io/linuxserver/calibre:latest
     container_name: calibre
     environment:
