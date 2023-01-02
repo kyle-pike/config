@@ -101,9 +101,9 @@ do
     read -p "Would you like to install $CONTAINER (y/n)? " answer
     case ${answer:0:1} in
       y|Y )
-          echo "========================"
+          echo "=========================================="
           echo " installing $CONTAINER  "
-          echo "========================"
+          echo "=========================================="
           docker compose --project-directory $CONTAINER pull
           docker compose --project-directory $CONTAINER up -d
        
