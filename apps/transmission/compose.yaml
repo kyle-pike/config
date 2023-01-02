@@ -7,12 +7,12 @@ services:
     env_file:
       - ../.env
     environment:
-      - PUID=1008
-      - PGID=1001
+      - PUID=1207
+      - PGID=1100
       - TZ=${TZ}
       - TRANSMISSION_WEB_HOME=/flood-for-transmission/
     volumes:
-      - ${CONFIG}/transmission:/config
+      - ${CONFIG}/apps/transmission:/config
       - ${DOWNLOADS}/:/downloads
     ports:
       - 9091:9091

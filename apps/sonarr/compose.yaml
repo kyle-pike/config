@@ -7,11 +7,11 @@ services:
     env_file:
       - ../.env
     environment:
-      - PUID=1007
-      - PGID=1001
+      - PUID=1206
+      - PGID=1100
       - TZ=${TZ}
     volumes:
-      - ${CONFIG}/sonarr:/config
+      - ${CONFIG}/apps/sonarr:/config
       - ${MEDIA}/tv:/tv
       - ${DOWNLOADS}/:/downloads 
     ports:

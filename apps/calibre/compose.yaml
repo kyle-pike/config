@@ -7,8 +7,8 @@ services:
       - ../.env
     container_name: calibre
     environment:
-      - PUID=1001
-      - PGID=1001
+      - PUID=1200
+      - PGID=1100
       - TZ=${TZ}
     volumes:
       - ${MEDIA}/calibre:/config
