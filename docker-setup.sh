@@ -7,6 +7,7 @@ TAB=/etc/crontab
 MAIN_FOLDER=/home/$(logname)
 
 
+
 # exit if errors during script
 set -e
 
@@ -54,6 +55,33 @@ function cron_docker(){
     echo "# updates docker containers every monday @0300L" >> $TAB
     echo "  0  3  *  *  1 root       $MAIN_FOLDER/config/docker-update.sh" >> $TAB
     
+}
+
+
+function permissions(){
+
+
+    # prepare for user namespaces
+    {
+  "userns-remap": "$(logname)"
+    }
+    
+     >> /etc/docker/daemon.json
+    # use variable for creating users ie 
+    calibre_uid=101200
+    useradd -u $calibre_uid calibre
+
+    # create media group with proper gid
+    groupadd media
+    # add user, useradd -G $GROUP -r -s /sbin/nologin $USER
+    useradd -g $GROUP -r -s /usr/sbin/nologin $USER
+    # change ownership of config file?
+
+    # change ownership of download to sabnzdb:media? what about transmission
+    groupadd media
+    chmod -R sabnzdb:media $MAIN_FOLDER/downloads
+
+
 }
 
 
