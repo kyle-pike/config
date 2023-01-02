@@ -44,6 +44,10 @@ do
     
 done
 
+for FOLDERS in $MAIN_FOLDER/config/apps/*
+do cp $MAIN_FOLDER/config/apps/.env $FOLDERS
+done
+
 }
 
 
@@ -101,7 +105,7 @@ do
           echo " installing $CONTAINER  "
           echo "========================"
           docker compose --project-directory $CONTAINER pull
-          docker compose --project-directory $CONTAINER --env-file $MAIN_FOLDER/config/apps/.env up -d
+          docker compose --project-directory $CONTAINER up -d
        
       ;;
       * )
