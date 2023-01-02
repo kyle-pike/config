@@ -3,8 +3,6 @@ version: "2.1"
 services:
   calibre:
     image: lscr.io/linuxserver/calibre:latest
-    env_file:
-      - ../.env
     container_name: calibre
     environment:
       - PUID=1200
