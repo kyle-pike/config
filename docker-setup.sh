@@ -4,7 +4,7 @@
 # variables
 ENV_FILE=/home/$(logname)/config/apps/.env
 TAB=/etc/crontab
-MAIN_FOLDER=/home/$(logname)
+HOME_DIR=/home/$(logname)
 
 
 
@@ -28,9 +28,9 @@ function check-root(){
 function docker_env(){
 
 
-mkdir -m 775 -p $MAIN_FOLDER/downloads/incomplete
-chmod 775 $MAIN_FOLDER/downloads
-chown -R 1000:1000 $MAIN_FOLDER/downloads/
+mkdir -m 775 -p $HOME_DIR/downloads/incomplete
+chmod 775 $HOME_DIR/downloads
+chown -R 1000:1000 $HOME_DIR/downloads/
 
 read -p "Please enter desired location for the media directory: " MEDIA
 
@@ -44,8 +44,8 @@ do
     
 done
 
-for FOLDERS in $MAIN_FOLDER/config/apps/*
-do cp $MAIN_FOLDER/config/apps/.env $FOLDERS
+for FOLDERS in $HOME_DIR/config/apps/*
+do cp $HOME_DIR/config/apps/.env $FOLDERS
 done
 
 }
@@ -54,12 +54,13 @@ done
 # adds to system schedule to update and reboot every monday @0200L
 function cron_docker(){
 
-    touch $MAIN_FOLDER/log
-    chown root:root $MAIN_FOLDER/config/docker-update.sh
+    touch $HOME_DIR/log
+    chown root:root $HOME_DIR/config/docker-update.sh
     echo "# updates docker containers every monday @0300L" >> $TAB
-    echo "  0  3  *  *  1 root       $MAIN_FOLDER/config/docker-update.sh" >> $TAB
+    echo "  0  3  *  *  1 root       $HOME_DIR/config/docker-update.sh" >> $TAB
     
 }
+
 
 
 function permissions(){
@@ -71,20 +72,38 @@ function permissions(){
     }
     
      >> /etc/docker/daemon.json
-    # use variable for creating users ie 
-    calibre_uid=101200
-    useradd -u $calibre_uid calibre
 
     # create media group with proper gid
-    groupadd media
+    groupadd -g 100999 calibre
+    groupadd -g 101000 media
     # add user, useradd -G $GROUP -r -s /sbin/nologin $USER
-    useradd -g $GROUP -r -s /usr/sbin/nologin $USER
+
+    useradd -u 100999 -g calibre -r -s /usr/sbin/nologin calibre
+    useradd -u 101000 -g media -r -s /usr/sbin/nologin sabnzbd
+    useradd -u 101100 -g media -r -s /usr/sbin/nologin transmission
+    useradd -u 101200 -g media -r -s /usr/sbin/nologin sonarr
+    useradd -u 101300 -g media -r -s /usr/sbin/nologin radarr
+    useradd -u 101400 -g media -r -s /usr/sbin/nologin lidarr
+    useradd -u 101500 -g media -r -s /usr/sbin/nologin jellyfin
+    useradd -u 101600 -g media -r -s /usr/sbin/nologin readarr
+
     # change ownership of config file?
 
     # change ownership of download to sabnzdb:media? what about transmission
-    groupadd media
-    chmod -R sabnzdb:media $MAIN_FOLDER/downloads
+    chmod -R sabnzdb:media $HOME_DIR/downloads
 
+}
+
+
+
+# test if .env file has been tampered with, so script can be reran
+function test_env_file(){
+
+    if [[ MEDIA != media ]]
+
+    then echo "incorrect permissions, Please run as root by then run the script again"; exit
+
+    fi
 
 }
 
@@ -95,7 +114,7 @@ function permissions(){
 check-root && docker_env 
 
 
-for CONTAINER in $MAIN_FOLDER/config/apps/*
+for CONTAINER in $HOME_DIR/config/apps/*
 do
 
     read -p "Would you like to install $CONTAINER (y/n)? " answer
