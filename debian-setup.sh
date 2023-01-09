@@ -100,7 +100,7 @@ function install_avahi(){
           echo "============================"
           echo "installing avahi mDNS daemon"
           echo "============================"
-          apt install avahi-daemon
+          apt install avahi-daemon -y
       ;;
       * )
           echo "========================"
@@ -133,7 +133,6 @@ function install_docker(){
 ### TODO firewall, modify /etc/fstab for nosuid, noexec, nodev
 if check-root && lock_password && cron && update_pkgs && install_tailscale && install_avahi && install_docker
 
-./config/docker-setup.sh
 
 then cat <<"EOF"
 
