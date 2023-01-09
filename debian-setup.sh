@@ -40,7 +40,7 @@ function check-root(){
 # extends $PATH and locks root account
 function lock_password(){
     
-    echo "export PATH=$PATH:/sbin:/usr/sbin:/usr/local/sbin/:usr/local/bin/" >> /home/$(logname)/.bashrc
+    echo "export PATH=$PATH:/sbin:/usr/sbin:/usr/local/sbin/:/usr/local/bin/" >> /home/$(logname)/.bashrc
     echo "======================================="
     echo "locking root account and extending PATH"
     echo "======================================="
