@@ -94,7 +94,7 @@ function install_tailscale(){
 function install_avahi(){
 
     echo " "
-    read -p "Would you like to install avahi-mDNS (y/n)? If you do not have a local DNS server please select yes " answer
+    read -p "Would you like to install avahi-mDNS (y/n)? " answer
     case ${answer:0:1} in
       y|Y )
           echo "============================"
