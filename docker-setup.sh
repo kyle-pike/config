@@ -5,6 +5,7 @@
 ENV_FILE=/home/$(logname)/config/apps/.env
 TAB=/etc/crontab
 HOME_DIR=/home/$(logname)
+DAEMON=/etc/docker/daemon.json
 
 
 
@@ -26,7 +27,6 @@ function check-root(){
 
 # sets directories to use for docker and places in environment file
 function docker_env(){
-
 
 mkdir -m 775 -p $HOME_DIR/downloads/incomplete
 chmod 775 $HOME_DIR/downloads
@@ -62,22 +62,26 @@ function cron_docker(){
 }
 
 
+# configure docker for user namespaces 
+function namespaces(){
 
+echo {                       >> $DAEMON
+echo "  "'"userns-remap"' : '"1000"' >> $DAEMON
+echo }                       >> $DAEMON
+
+systemctl restart docker.s*
+
+}
+
+
+# setup system accounts for user namespaces
 function permissions(){
-
-
-    # prepare for user namespaces
-    {
-  "userns-remap": "$(logname)"
-    }
     
-     >> /etc/docker/daemon.json
-
-    # create media group with proper gid
+    groupadd -g 100000 fake_root
     groupadd -g 100999 calibre
     groupadd -g 101000 media
-    # add user, useradd -G $GROUP -r -s /sbin/nologin $USER
-
+    
+    useradd -u 100000 -g fake_root -r -s /usr/sbin/nologin fake_root
     useradd -u 100999 -g calibre -r -s /usr/sbin/nologin calibre
     useradd -u 101000 -g media -r -s /usr/sbin/nologin sabnzbd
     useradd -u 101100 -g media -r -s /usr/sbin/nologin transmission
@@ -95,24 +99,8 @@ function permissions(){
 }
 
 
-
-# test if .env file has been tampered with, so script can be reran
-function test_env_file(){
-
-    if [[ MEDIA != media ]]
-
-    then echo "incorrect permissions, Please run as root by then run the script again"; exit
-
-    fi
-
-}
-
-
-# script
-# TODO : create locked user accounts per container, dashdot for monitoring, homarr, intend for script to be reran
-# !!! chown for who owns what folders, ie sabnzdb:media
-check-root && docker_env 
-
+# installs containers
+function install_containers(){
 
 for CONTAINER in $HOME_DIR/config/apps/*
 do
@@ -136,15 +124,26 @@ do
 
 done
 
+}
+
+
+# script
+# TODO : create locked user accounts per container, dashdot for monitoring, homarr, intend for script to be reran
+# !!! chown for who owns what folders, ie sabnzdb:media
+check-root && docker_env 
+
+# install_containers
+
 cron_docker
 
 cat <<"EOF"
 
-    ================================
+================================
 
-            SCRIPT COMPLETED
+       SCRIPT COMPLETED
 
-    ================================
+================================
 
 EOF
-    sleep 2
+
+sleep 2
